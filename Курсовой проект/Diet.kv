@@ -1,0 +1,495 @@
+WindowManager:
+    Auth:
+        name: "auth"
+        MDCard:
+            size_hint: None, None
+            size: 400, 500
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            elevation: 10
+            padding: 25
+            spacing: 25
+            orientation: 'vertical'
+
+            MDLabel:
+                id: auth
+                text: "Авторизация"
+                font_size: 40
+                halign: 'center'
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding_y: 5
+
+            MDTextFieldRound:
+                id: user
+                hint_text: 'логин'
+                icon_right: "account"
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {'center_x': 0.5}
+
+            MDTextFieldRound:
+                id: password
+                hint_text: 'пароль'
+                icon_right: "eye-off"
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {'center_x': 0.5}
+                password: True
+
+            MDRoundFlatButton:
+                text: "Войти"
+                font_size: 12
+                pos_hint: {'center_x': 0.5}
+                on_press: app.login()
+
+
+            MDRoundFlatButton:
+                text: "Регистрация"
+                font_size: 12
+                pos_hint: {'center_x': 0.5}
+                on_press: app.root.current = "registr"
+
+            Widget:
+                size_hint_y: None
+                height: 65
+
+
+    MainWindow:
+        name: "main"
+        BoxLayout:
+            orientation:'vertical'
+
+            MDBottomNavigation:
+                panel_color: 0.29, 0.29, 0.29, 1
+
+
+                MDBottomNavigationItem:
+                    name: 'screen 2'
+                    icon: 'food-variant'
+                    text: 'Питание'
+                    user_font_size:"32sp"
+
+                    BoxLayout:
+                        orientation: 'vertical'
+
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            size_hint_y: .3
+                            MDLabel:
+                                text: 'Калории:'
+                                halign: 'center'
+
+                            MDLabel:
+                                id: calories_num
+                                text: '0'
+                                halign: 'center'
+
+                            MDLabel:
+                                text: 'Белки:'
+                                halign: 'center'
+
+                            MDLabel:
+                                id: protein_num
+                                text: '0'
+                                halign: 'center'
+
+                            MDLabel:
+                                text: 'Жиры:'
+                                halign: 'center'
+
+                            MDLabel:
+                                id: fats_num
+                                text: '0'
+                                halign: 'center'
+
+
+                        Accordion:
+                            orientation: 'vertical'
+
+                            AccordionItem:
+                                title: 'Завтрак'
+                                BoxLayout:
+                                    orientation: 'vertical'
+                                    Button:
+                                        background_color: 0, 1, 1, 1
+                                        size_hint_x: 0.5
+                                        size_hint_y: 0.2
+                                        text: 'Добавить'
+                                        pos_hint: {'center_x': 0.5}
+                                        on_press: app.menu_insert()
+                                    ScrollView:
+                                        MDList:
+                                            id: breakfast
+
+
+
+                            AccordionItem:
+                                title: 'Обед'
+                                BoxLayout:
+                                    orientation: 'vertical'
+                                    Button:
+                                        background_color: 0, 1, 1, 1
+                                        size_hint_x: 0.5
+                                        size_hint_y: 0.2
+                                        text: 'Добавить'
+                                        pos_hint: {'center_x': 0.5}
+                                        on_press: app.menu_insert_dinner()
+                                    ScrollView:
+                                        MDList:
+                                            id: dinner
+
+                            AccordionItem:
+                                title: 'Ужин'
+                                BoxLayout:
+                                    orientation: 'vertical'
+                                    Button:
+                                        background_color: 0, 1, 1, 1
+                                        size_hint_x: 0.5
+                                        size_hint_y: 0.2
+                                        text: 'Добавить'
+                                        pos_hint: {'center_x': 0.5}
+                                        on_press: app.menu_insert_even()
+                                    ScrollView:
+                                        MDList:
+                                            id: even
+
+
+
+
+                MDBottomNavigationItem:
+                    name: 'screen 3'
+                    icon: 'chart-bar'
+                    text: 'График'
+                    user_font_size:"32sp"
+                    on_tab_press: app.matplot()
+                    BoxLayout:
+                        id: box
+
+
+
+
+                MDBottomNavigationItem:
+                    name: 'screen 4'
+                    text: 'Профиль'
+                    icon: 'account'
+                    on_tab_press: app.acc_upd()
+                    BoxLayout:
+                        orientation: 'vertical'
+                        MDLabel:
+                            size_hint_y: .4
+                            text: "Помощник диетолога"
+                            theme_text_color: "Custom"
+                            text_color: 1, 1, 1, 1
+                            md_bg_color: 0.29, 0.29, 0.29, 1
+                            font_size: 40
+                            halign: 'center'
+
+                        MDIconButton:
+                            icon: 'plus'
+                            pos_hint: {'center_x': 0.95}
+                            on_press: app.root.current = "weight_upd"
+
+                        MDLabel:
+                            size_hint_y: .4
+                            text: "Текущий вес"
+                            font_size: 26
+                            halign: 'center'
+
+                        MDLabel:
+                            id: weight_upd
+                            pos_hint:{'center_x': 0.5}
+                            size_hint_y: .4
+                            size_hint_x: .3
+                            md_bg_color: 0.29, 0.29, 0.29, 1
+                            text: "68,00"
+                            font_size: 26
+                            halign: 'center'
+
+                        BoxLayout:
+                            orientation: 'horizontal'
+
+                            MDLabel:
+                                id: weight_upd_start
+                                text: "Начальный вес: 66"
+                                font_size: 26
+                                halign: 'center'
+
+                            MDLabel:
+                                id: weight_upd_des
+                                text: "Желаемый вес: 75"
+                                font_size: 26
+                                halign: 'center'
+
+                        MDLabel:
+                            id: prog_bar_txt
+                            size_hint_y: .2
+                            text: "0% Progress"
+                            halign: 'center'
+
+                        ProgressBar:
+                            id: prog_bar
+                            min: 0
+                            max: 7
+                            pos_hint: {'center_x': 0.5}
+                            size_hint_x: .8
+                            value: 2
+
+
+
+
+
+
+    Registr:
+        name: "registr"
+        MDCard:
+            size_hint: None, None
+            size: 400, 500
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            elevation: 10
+            padding: 25
+            spacing: 25
+            orientation: 'vertical'
+
+            MDLabel:
+                id: registr
+                text: "Регистрация"
+                font_size: 40
+                halign: 'center'
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding_y: 5
+
+            MDTextFieldRound:
+                id: user_reg
+                hint_text: 'логин'
+                icon_right: "account"
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {'center_x': 0.5}
+
+            MDTextFieldRound:
+                id: password_reg
+                hint_text: 'пароль'
+                icon_right: "eye-off"
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {'center_x': 0.5}
+                password: True
+
+            MDTextFieldRound:
+                id: name_reg
+                hint_text: 'имя'
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {'center_x': 0.5}
+
+
+            MDRoundFlatButton:
+                text: "Зарегистрироваться"
+                font_size: 12
+                pos_hint: {'center_x': 0.5}
+                on_press: app.registration()
+
+
+            MDRoundFlatButton:
+                text: "Авторизация"
+                font_size: 12
+                pos_hint: {'center_x': 0.5}
+                on_press: app.root.current = "auth"
+
+            Widget:
+                size_hint_y: None
+                height: 25
+
+    Weight:
+        name: "weight"
+        MDCard:
+            size_hint: None, None
+            size: 400, 500
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            elevation: 10
+            padding: 25
+            spacing: 25
+            orientation: 'vertical'
+
+            MDLabel:
+                text: "Укажите вес"
+                font_size: 40
+                halign: 'center'
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding_y: 5
+
+
+            MDTextFieldRound:
+                id: weight_start
+                hint_text: 'начальный вес'
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {'center_x': 0.5}
+
+            MDTextFieldRound:
+                id: weight_des
+                hint_text: 'желаемый вес'
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {'center_x': 0.5}
+
+            MDRoundFlatButton:
+                text: "Далее"
+                font_size: 12
+                pos_hint: {'center_x': 0.5}
+                on_press: app.weight_reg()
+
+
+            Widget:
+                size_hint_y: None
+                height: 25
+
+    Weight_upd:
+        name: "weight_upd"
+        MDCard:
+            size_hint: None, None
+            size: 400, 500
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            elevation: 10
+            padding: 25
+            spacing: 25
+            orientation: 'vertical'
+
+            MDLabel:
+                text: "Ваш текущий вес"
+                font_size: 32
+                halign: 'center'
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding_y: 5
+
+
+            MDTextFieldRound:
+                id: weight_now
+                hint_text: 'вес'
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {'center_x': 0.5}
+
+
+            MDRoundFlatButton:
+                text: "ОК"
+                font_size: 12
+                pos_hint: {'center_x': 0.5}
+                on_press: app.weight_now_update()
+
+
+            Widget:
+                size_hint_y: None
+                height: 55
+
+    Food_Menu:
+        name: "food_menu"
+        BoxLayout:
+            orientation: 'vertical'
+            MDIconButton:
+                icon: 'plus'
+                pos_hint: {'center_x': 0.95}
+                on_release: app.root.current = "food_insert"
+            ScrollView:
+                MDList:
+                    id: food_menu
+
+    Food_Insert:
+        name: "food_insert"
+        MDCard:
+            size_hint: None, None
+            size: 400, 500
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            elevation: 10
+            padding: 25
+            spacing: 25
+            orientation: 'vertical'
+
+            MDLabel:
+                text: "Добавление еды"
+                font_size: 32
+                halign: 'center'
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding_y: 5
+
+
+            MDTextFieldRound:
+                id: name_food
+                hint_text: 'название'
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {'center_x': 0.5}
+
+            MDTextFieldRound:
+                id: calories
+                hint_text: 'калории'
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {'center_x': 0.5}
+
+            MDTextFieldRound:
+                id: proteins
+                hint_text: 'белки'
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {'center_x': 0.5}
+
+            MDTextFieldRound:
+                id: fats
+                hint_text: 'жиры'
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {'center_x': 0.5}
+
+
+            MDRoundFlatButton:
+                text: "ОК"
+                font_size: 12
+                pos_hint: {'center_x': 0.5}
+                on_press: app.food_insert()
+
+
+            Widget:
+                size_hint_y: None
+                height: 55
+
+    Food_Menu_Dinner:
+        name: "food_menu_dinner"
+        BoxLayout:
+            orientation: 'vertical'
+            MDIconButton:
+                icon: 'plus'
+                pos_hint: {'center_x': 0.95}
+                on_release: app.root.current = "food_insert"
+            ScrollView:
+                MDList:
+                    id: food_menu_dinner
+
+    Food_Menu_Even:
+        name: "food_menu_even"
+        BoxLayout:
+            orientation: 'vertical'
+            MDIconButton:
+                icon: 'plus'
+                pos_hint: {'center_x': 0.95}
+                on_release: app.root.current = "food_insert"
+            ScrollView:
+                MDList:
+                    id: food_menu_even
+
